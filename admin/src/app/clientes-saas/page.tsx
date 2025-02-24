@@ -2,16 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { useTheme } from "../../context/ThemeContext";
 
-interface Produto {
+interface Cliente {
   id: number;
   name: string;
-  price: number;
-  stock: number;
+  email: string;
+  phone: string;
 }
 
-export default function ProdutosPage() {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
+export default function ClientesPage() {
+  const { theme } = useTheme();
+  const [clientes, setClientes] = useState<Cliente[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
@@ -27,16 +29,16 @@ export default function ProdutosPage() {
       return;
     }
 
-    fetch("http://localhost:3000/products", {
+    fetch("http://localhost:3000/customers", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Erro ao buscar produtos");
+        if (!res.ok) throw new Error("Erro ao buscar clientes");
         return res.json();
       })
-      .then((data) => setProdutos(data))
+      .then((data) => setClientes(data))
       .catch((err) => {
-        setError("Erro ao carregar produtos. Verifique sua conexão.");
+        setError("Erro ao carregar clientes. Verifique sua conexão.");
         console.error(err);
       })
       .finally(() => setLoading(false));
@@ -46,7 +48,7 @@ export default function ProdutosPage() {
 
   return (
     <div className="min-h-screen p-6 bg-white text-black">
-      <h1 className="text-3xl font-bold mb-6 text-black">Produtos</h1>
+      <h1 className="text-3xl font-bold mb-6 text-black">Clientes SaaS</h1>
 
       {loading ? (
         <p className="text-lg font-bold text-black">Carregando...</p>
@@ -59,17 +61,17 @@ export default function ProdutosPage() {
               <tr>
                 <th className="p-3 text-left">ID</th>
                 <th className="p-3 text-left">Nome</th>
-                <th className="p-3 text-left">Preço</th>
-                <th className="p-3 text-left">Estoque</th>
+                <th className="p-3 text-left">E-mail</th>
+                <th className="p-3 text-left">Telefone</th>
               </tr>
             </thead>
             <tbody>
-              {produtos.map((produto) => (
-                <tr key={produto.id} className="border-b border-gray-300 hover:bg-gray-100">
-                  <td className="p-3">{produto.id}</td>
-                  <td className="p-3">{produto.name}</td>
-                  <td className="p-3">R$ {produto.price.toFixed(2)}</td>
-                  <td className="p-3">{produto.stock}</td>
+              {clientes.map((cliente) => (
+                <tr key={cliente.id} className="border-b border-gray-300 hover:bg-gray-100">
+                  <td className="p-3">{cliente.id}</td>
+                  <td className="p-3">{cliente.name}</td>
+                  <td className="p-3">{cliente.email}</td>
+                  <td className="p-3">{cliente.phone}</td>
                 </tr>
               ))}
             </tbody>

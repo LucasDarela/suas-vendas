@@ -1,18 +1,24 @@
 import type { Config } from "tailwindcss";
 
-export default {
+const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "#00ff00", // Verde Monster
+        secondary: "#111111", // Preto Monster
+        darkGray: "#1f1f1f", // Cinza escuro para fundo
+        lightGray: "#e5e5e5", // Cinza claro para contrastes
+      },
+      fontFamily: {
+        sans: ["Poppins", "sans-serif"], // Fonte moderna e clean
       },
     },
   },
   plugins: [],
-} satisfies Config;
+};
+
+export default config;

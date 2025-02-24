@@ -23,11 +23,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="pt">
+      <body className="bg-darkGray text-lightGray font-sans">
+        <div className="flex">
+          {/* Sidebar */}
+          <aside className="w-64 bg-secondary text-white p-6 h-screen">
+            <h2 className="text-2xl font-bold text-primary mb-4">Painel SaaS</h2>
+            <nav>
+              <ul>
+                <li className="mb-3">
+                  <a href="/clientes" className="block p-3 rounded bg-primary text-black hover:bg-green-500">
+                    Clientes
+                  </a>
+                </li>
+                <li>
+                  <a href="/produtos" className="block p-3 rounded bg-primary text-black hover:bg-green-500">
+                    Produtos
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </aside>
+
+          {/* Conteúdo */}
+          <main className="flex-1 p-6">{children}</main>
+        </div>
       </body>
     </html>
   );
